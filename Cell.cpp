@@ -4,13 +4,13 @@
 
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
 	if (cell == Cell::EMPTY) {
-		os << "EMPTY";
+		os << "E";
 	}
 	if (cell == Cell::RED) {
-		os << "RED";
+		os << "R";
 	}
 	if (cell == Cell::YELLOW) {
-		os << "YELLOW";
+		os << "Y";
 	}
 	return os;
 }

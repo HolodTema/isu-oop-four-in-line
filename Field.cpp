@@ -30,9 +30,59 @@ bool Field::makeTurn(int column) {
 	return false;
 }
 
-
 void Field::checkWinner() {
+	constexpr int DIR_NUMBER = 4;
+	constexpr int WIN_LENGTH = 4;
 
+	constexpr int di[] = {1, 0, 1, 1};
+	constexpr int dj[] = {0, 1, -1, 1};
+
+	for (int i = 0; i < FIELD_WIDTH; ++i) {
+		for (int j = 0; j < FIELD_HEIGHT; ++j) {
+			Cell cellStart = cells_[i][j];
+			if (cellStart == Cell::EMPTY) {
+				continue;
+			}
+
+			for (int dir = 0; dir < DIR_NUMBER; ++dir) {
+				int length = 1;
+				int iLine = i;
+				int jLine = j;
+				while (length < WIN_LENGTH) {
+					length++;
+					iLine += di[dir];
+					jLine += dj[dir];
+					if (iLine < 0 || iLine >= FIELD_WIDTH) {
+						break;
+					}
+					if (jLine < 0 || jLine >= FIELD_HEIGHT) {
+						break;
+					}
+					if (cells_[iLine][jLine] != cellStart) {
+						break;
+					}
+				}
+				if (length == WIN_LENGTH) {
+					winner_ = cellStart;
+					return;
+				}
+			}
+		}
+	}
+}
+
+bool Field::isOver() const {
+	if (winner_ != Cell::EMPTY) {
+		return true;
+	}
+	for (int i = 0; i < FIELD_WIDTH; ++i) {
+		for (int j = 0; j < FIELD_HEIGHT; ++j) {
+			if (cells_[i][j] == Cell::EMPTY) {
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 Cell Field::getCell(int i, int j) const {

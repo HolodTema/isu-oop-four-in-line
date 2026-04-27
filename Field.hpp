@@ -31,8 +31,6 @@ public:
 
 	void checkWinner();
 
-	bool isWon(bool red) const;
-
 	bool isOver() const;
 
 	Cell getCell(int i, int j) const;
